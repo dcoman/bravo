@@ -25,8 +25,8 @@
         <div class="wrapper">
             <div class="page">
                    {% block header %}
-                        <div class="header-container">             
-                             <div class="header">       
+                        <div class="header-container">
+                             <div class="header">
                                  <div class="quick-access">
 
                                      {% block search %}
@@ -41,15 +41,20 @@
                                      {% endblock %}
 
                                      {% block headermenu %}
-                                         <p class="welcome-msg">{% block welcomeMessage %}Welcome!{% endblock %}</p>
-                                         {{ knp_menu_render('ShopBookshopBundle:Builder:headerMenuGuest') }}    
+                                           {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                                               <p class="welcome-msg">Welcome {{ app.user.username }} !</p>
+                                               {{ knp_menu_render('ShopBookshopBundle:Builder:headerMenuUser') }}
+                                           {% else %}
+                                               <p class="welcome-msg">Welcome!</p>
+                                               {{ knp_menu_render('ShopBookshopBundle:Builder:headerMenuGuest') }}
+                                           {% endif %}
                                      {% endblock %}
 
                                  </div>
                              </div>
                         </div>
                    {% endblock %}
-                    
+
                    {% block menu %}
                         <div class="nav-container">
                             {{ knp_menu_render('ShopBookshopBundle:Builder:headerMenuCategories') }}
@@ -60,7 +65,7 @@
 
                    {% endblock %}
 
-                   {% block footer %} 
+                   {% block footer %}
                         <div class = "footer-container">
                             <div class = "footer">
                                 <ul>
